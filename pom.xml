@@ -8,7 +8,7 @@
     <groupId>com.github.igor-suhorukov</groupId>
     <artifactId>phantomjs-runner</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>phantomjs-runner</name>
     <description>PhantomJS auto downloader</description>
     <url>https://github.com/igor-suhorukov/phantomjs-runner</url>
