@@ -1,6 +1,6 @@
 package com.github.igorsuhorukov.phantomjs;
 
-import org.apache.maven.cli.MavenCli;
+import com.github.igorsuhorukov.maven.MavenUtils;
 import org.codehaus.plexus.util.IOUtil;
 
 import java.io.*;
@@ -19,12 +19,8 @@ public class PhantomJsDowloader {
 
     public static String getPhantomJsPath(String version, ClassLoader classLoader, File projectDirectory) throws Exception{
         copyProjectModel(classLoader, projectDirectory);
-        MavenCli mavenCli = new MavenCli();
-
-        String baseDir = projectDirectory.getAbsolutePath();
-        System.setProperty(MavenCli.MULTIMODULE_PROJECT_DIRECTORY, baseDir);
         String[] mavenParameters = {"install", "-Dphantomjs.version=" + version};
-        checkRetCode(mavenCli.doMain(mavenParameters, baseDir, System.out, System.err));
+        checkRetCode(MavenUtils.executeMavenTask(projectDirectory.getAbsolutePath(), mavenParameters, System.out, System.err));
         return System.getProperty("phantomjs.binary");
     }
 
@@ -37,9 +33,10 @@ public class PhantomJsDowloader {
         }
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static File getTempDir() {
         File tempDir = new File(System.getProperty("java.io.tmpdir"), "phantomjs");
-        if(!tempDir.exists()){
+        if(!tempDir.exists()) {
             tempDir.mkdir();
         }
         return tempDir;
@@ -47,7 +44,7 @@ public class PhantomJsDowloader {
 
     private static void checkRetCode(int retCode) {
         if(retCode!=0){
-            throw new IllegalArgumentException("Maven exit code  "+ retCode);
+            throw new IllegalArgumentException("Maven exit with code: "+ retCode);
         }
     }
 }
