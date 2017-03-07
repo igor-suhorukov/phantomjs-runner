@@ -1,6 +1,6 @@
 package com.github.igorsuhorukov.phantomjs;
 
-import com.github.igorsuhorukov.maven.MavenUtils;
+import com.github.igorsuhorukov.maven.MavenRunner;
 import org.codehaus.plexus.util.IOUtil;
 
 import java.io.*;
@@ -20,7 +20,7 @@ public class PhantomJsDowloader {
     public static String getPhantomJsPath(String version, ClassLoader classLoader, File projectDirectory) throws Exception{
         copyProjectModel(classLoader, projectDirectory);
         String[] mavenParameters = {"install", "-Dphantomjs.version=" + version};
-        checkRetCode(MavenUtils.executeMavenTask(projectDirectory.getAbsolutePath(), mavenParameters, System.out, System.err));
+        checkRetCode(MavenRunner.executeMavenTask(projectDirectory.getAbsolutePath(), mavenParameters, System.out, System.err));
         return System.getProperty("phantomjs.binary");
     }
 
